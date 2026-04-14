@@ -137,7 +137,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
               type="tel"
               value={form.phone}
               onChange={(e) => set('phone', e.target.value)}
-              placeholder="086 123 4567"
+              placeholder="082 123 4567"
             />
             <Select
               label="Status"
