@@ -48,21 +48,21 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-red-800 rounded-2xl px-7 py-6 text-white shadow-lg">
-        <div className="relative z-10">
-          <h1 className="text-2xl font-bold tracking-tight">Welcome back, Charlotte! 👋</h1>
-          <p className="text-sm text-blue-200 mt-1">Here&apos;s your compliance overview for today.</p>
-        </div>
-        {/* Decorative circles */}
-        <div className="absolute -top-6 -right-6 w-36 h-36 rounded-full bg-gradient-to-br from-red-600 to-red-800 opacity-30" />
-        <div className="absolute -bottom-10 right-16 w-24 h-24 rounded-full bg-gradient-to-br from-red-700 to-red-900 opacity-20" />
-        <div className="absolute top-2 right-32 w-12 h-12 rounded-full bg-red-600 opacity-15" />
-        <div className="absolute bottom-0 right-0">
-          <div className="flex gap-2 p-5">
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-blue-950 to-slate-900 rounded-2xl px-7 py-6 text-white shadow-lg">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Welcome back, Charlotte! 👋</h1>
+            <p className="text-sm text-blue-200 mt-1">Here&apos;s your compliance overview for today.</p>
+          </div>
+          <div className="flex gap-2">
             <Link href="/companies/new"><button className="bg-white/10 hover:bg-white/20 transition text-white text-xs font-medium px-3 py-1.5 rounded-lg border border-white/20">+ Company</button></Link>
             <Link href="/invoices/new"><button className="bg-white text-red-700 hover:bg-red-50 transition text-xs font-semibold px-3 py-1.5 rounded-lg">+ Invoice</button></Link>
           </div>
         </div>
+        {/* Decorative circles */}
+        <div className="absolute -top-6 -right-6 w-36 h-36 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 opacity-20" />
+        <div className="absolute -bottom-10 right-16 w-24 h-24 rounded-full bg-gradient-to-br from-blue-700 to-blue-900 opacity-15" />
+        <div className="absolute top-2 right-32 w-12 h-12 rounded-full bg-blue-500 opacity-10" />
       </div>
 
       {/* KPI Grid */}
