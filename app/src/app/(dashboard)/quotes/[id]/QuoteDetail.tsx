@@ -61,7 +61,7 @@ export function QuoteDetail({ quote }: Props) {
           title={quote.quote_number}
           subtitle={`Quote for ${quote.companies?.name ?? '—'}`}
           action={
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {!quote.converted_to_invoice_id && (
                 <Button variant="secondary" size="sm" onClick={() => setConvertModal(true)}>
                   <ArrowRight className="w-3.5 h-3.5 mr-1" />Convert to Invoice
@@ -78,12 +78,12 @@ export function QuoteDetail({ quote }: Props) {
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden print:shadow-none print:rounded-none">
 
         {/* Top colour bar */}
-        <div className="h-2 bg-gradient-to-r from-blue-950 via-red-700 to-yellow-400" />
+        <div className="h-2 bg-gradient-to-r from-slate-700 via-blue-800 to-blue-500" />
 
-        <div className="p-8 print:p-10">
+        <div className="p-5 sm:p-8 print:p-10">
 
           {/* ── Header row ── */}
-          <div className="flex items-start justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
             <div>
               <h1 className="text-5xl font-black text-red-700 tracking-widest leading-none">QUOTE</h1>
               <div className="mt-3 space-y-0.5 text-xs text-gray-500">
@@ -106,7 +106,7 @@ export function QuoteDetail({ quote }: Props) {
           </div>
 
           {/* ── Quote meta ── */}
-          <div className="grid grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-8">
             <div>
               <p className="text-xs font-bold text-red-700 uppercase tracking-widest mb-2">Quote For:</p>
               <p className="font-semibold text-blue-950 text-sm">{quote.companies?.name ?? '—'}</p>
@@ -155,7 +155,7 @@ export function QuoteDetail({ quote }: Props) {
 
           {/* ── Totals ── */}
           <div className="flex justify-end mb-8">
-            <div className="w-72 space-y-1 text-sm">
+            <div className="w-full sm:w-72 space-y-1 text-sm">
               <div className="flex justify-between py-1 border-b border-gray-100">
                 <span className="text-gray-500">Subtotal</span>
                 <span className="text-gray-700">{formatCurrency(quote.subtotal)}</span>
@@ -189,7 +189,7 @@ export function QuoteDetail({ quote }: Props) {
           )}
 
           {/* ── Footer ── */}
-          <div className="border-t-2 border-red-700 pt-5 mt-4 flex gap-8">
+          <div className="border-t-2 border-red-700 pt-5 mt-4 flex flex-col sm:flex-row gap-4 sm:gap-8">
             <div className="flex-1 flex items-center">
               <p className="text-3xl text-blue-950 italic" style={{ fontFamily: 'Georgia, serif' }}>Thank You</p>
             </div>
@@ -205,7 +205,7 @@ export function QuoteDetail({ quote }: Props) {
           </div>
 
           {/* Bottom colour bar */}
-          <div className="h-1 bg-gradient-to-r from-red-700 via-blue-950 to-yellow-400 mt-6 -mx-8 print:-mx-10" />
+          <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-800 to-slate-700 mt-6 -mx-5 sm:-mx-8 print:-mx-10" />
         </div>
       </div>
 
