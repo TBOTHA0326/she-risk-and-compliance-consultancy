@@ -165,7 +165,7 @@ export function InvoiceForm({ invoice, companies }: InvoiceFormProps) {
               <h2 className="text-sm font-semibold text-gray-700">Invoice Details</h2>
               {error && <ErrorMessage message={error} />}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Input
                     label="Invoice Number"
@@ -188,7 +188,7 @@ export function InvoiceForm({ invoice, companies }: InvoiceFormProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input
                   label="Issue Date"
                   type="date"
@@ -225,8 +225,8 @@ export function InvoiceForm({ invoice, companies }: InvoiceFormProps) {
 
               <div className="space-y-2">
                 {lineItems.map((li, idx) => (
-                  <div key={idx} className="grid grid-cols-12 gap-2 items-end">
-                    <div className="col-span-6">
+                  <div key={idx} className="flex flex-col gap-2 sm:grid sm:grid-cols-12 sm:gap-2 sm:items-end">
+                    <div className="sm:col-span-6">
                       <Input
                         label={idx === 0 ? 'Description' : ''}
                         value={li.description}
@@ -234,34 +234,36 @@ export function InvoiceForm({ invoice, companies }: InvoiceFormProps) {
                         placeholder="Service description..."
                       />
                     </div>
-                    <div className="col-span-2">
-                      <Input
-                        label={idx === 0 ? 'Qty' : ''}
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={li.quantity}
-                        onChange={(e) => updateLineItem(idx, 'quantity', e.target.value)}
-                      />
-                    </div>
-                    <div className="col-span-3">
-                      <Input
-                        label={idx === 0 ? 'Unit Price' : ''}
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={li.unit_price}
-                        onChange={(e) => updateLineItem(idx, 'unit_price', e.target.value)}
-                      />
-                    </div>
-                    <div className="col-span-1 pb-0.5">
-                      <button
-                        type="button"
-                        onClick={() => removeLineItem(idx)}
-                        className="p-2 text-gray-400 hover:text-red-500 transition cursor-pointer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                    <div className="flex gap-2 items-end sm:contents">
+                      <div className="w-20 shrink-0 sm:w-auto sm:col-span-2">
+                        <Input
+                          label={idx === 0 ? 'Qty' : ''}
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={li.quantity}
+                          onChange={(e) => updateLineItem(idx, 'quantity', e.target.value)}
+                        />
+                      </div>
+                      <div className="flex-1 sm:col-span-3">
+                        <Input
+                          label={idx === 0 ? 'Unit Price' : ''}
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={li.unit_price}
+                          onChange={(e) => updateLineItem(idx, 'unit_price', e.target.value)}
+                        />
+                      </div>
+                      <div className="flex items-end shrink-0 pb-0.5 sm:col-span-1">
+                        <button
+                          type="button"
+                          onClick={() => removeLineItem(idx)}
+                          className="p-2 text-gray-400 hover:text-red-500 transition cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
