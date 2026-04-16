@@ -143,7 +143,8 @@ export function InvoiceDetail({ invoice }: Props) {
           </div>
 
           {/* ── Line items table ── */}
-          <table className="w-full text-sm mb-6">
+          <div className="overflow-x-auto -mx-5 px-5 sm:-mx-8 sm:px-8 print:overflow-visible mb-6">
+          <table className="w-full text-sm min-w-100">
             <thead>
               <tr className="bg-blue-950 text-white">
                 <th className="text-left py-2.5 px-4 font-semibold text-xs uppercase tracking-wide">Description</th>
@@ -163,6 +164,7 @@ export function InvoiceDetail({ invoice }: Props) {
               ))}
             </tbody>
           </table>
+          </div>
 
           {/* ── Totals ── */}
           <div className="flex justify-end mb-8">
@@ -199,7 +201,7 @@ export function InvoiceDetail({ invoice }: Props) {
             </div>
 
             {/* Divider */}
-            <div className="w-px bg-gray-200" />
+            <div className="hidden sm:block w-px bg-gray-200" />
 
             {/* Terms & bank details */}
             <div className="flex-1 text-xs text-gray-600 space-y-0.5">

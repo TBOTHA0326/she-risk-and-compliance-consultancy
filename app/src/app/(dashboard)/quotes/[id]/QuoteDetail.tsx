@@ -132,7 +132,8 @@ export function QuoteDetail({ quote }: Props) {
           </div>
 
           {/* ── Line items table ── */}
-          <table className="w-full text-sm mb-6">
+          <div className="overflow-x-auto -mx-5 px-5 sm:-mx-8 sm:px-8 print:overflow-visible mb-6">
+          <table className="w-full text-sm min-w-100">
             <thead>
               <tr className="bg-blue-950 text-white">
                 <th className="text-left py-2.5 px-4 font-semibold text-xs uppercase tracking-wide">Description</th>
@@ -152,6 +153,7 @@ export function QuoteDetail({ quote }: Props) {
               ))}
             </tbody>
           </table>
+          </div>
 
           {/* ── Totals ── */}
           <div className="flex justify-end mb-8">
@@ -193,7 +195,7 @@ export function QuoteDetail({ quote }: Props) {
             <div className="flex-1 flex items-center">
               <p className="text-3xl text-blue-950 italic" style={{ fontFamily: 'Georgia, serif' }}>Thank You</p>
             </div>
-            <div className="w-px bg-gray-200" />
+            <div className="hidden sm:block w-px bg-gray-200" />
             <div className="flex-1 text-xs text-gray-600 space-y-0.5">
               <p className="font-bold text-red-700 uppercase tracking-widest text-xs mb-1">Terms &amp; Conditions</p>
               <p>This quote is valid until the date specified above.</p>
