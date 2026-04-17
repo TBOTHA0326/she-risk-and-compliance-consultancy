@@ -28,7 +28,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
     }} />
   )
 
-  return new Response(pdfBuffer, {
+  const pdfArrayBuffer = pdfBuffer.buffer.slice(pdfBuffer.byteOffset, pdfBuffer.byteOffset + pdfBuffer.byteLength)
+
+  return new Response(pdfArrayBuffer, {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="quote-${quote.quote_number}.pdf"`,
