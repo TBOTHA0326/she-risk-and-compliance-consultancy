@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { PageHeader } from '@/components/ui/Card'
@@ -11,7 +11,7 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 import { Modal } from '@/components/ui/Modal'
 import { Input } from '@/components/ui/Input'
 import type { Quote, QuoteLineItem } from '@/types/database'
-import { Edit, Trash2, ArrowRight } from 'lucide-react'
+import { Edit, Trash2, ArrowRight, Download } from 'lucide-react'
 
 interface Props {
   quote: Quote & {
@@ -26,8 +26,14 @@ export function QuoteDetail({ quote }: Props) {
   const [deleting, setDeleting] = useState(false)
   const [converting, setConverting] = useState(false)
   const [convertModal, setConvertModal] = useState(false)
-  const [invoiceNumber, setInvoiceNumber] = useState(`INV-${Date.now().toString().slice(-5)}`)
+  const [invoiceNumber, setInvoiceNumber] = useState('')
   const [dueDate, setDueDate] = useState('')
+
+  useEffect(() => {
+    if (!invoiceNumber) {
+      setInvoiceNumber(`INV-${Date.now().toString().slice(-5)}`)
+    }
+  }, [invoiceNumber])
 
   async function handleDelete() {
     if (!confirm('Delete this quote?')) return
@@ -62,6 +68,9 @@ export function QuoteDetail({ quote }: Props) {
           subtitle={`Quote for ${quote.companies?.name ?? '—'}`}
           action={
             <div className="flex flex-wrap gap-2">
+              <a href={`/api/quotes/${quote.id}/pdf`} target="_blank" rel="noreferrer">
+                <Button variant="secondary" size="sm"><Download className="w-4 h-4 mr-1" />Download PDF</Button>
+              </a>
               {!quote.converted_to_invoice_id && (
                 <Button variant="secondary" size="sm" onClick={() => setConvertModal(true)}>
                   <ArrowRight className="w-3.5 h-3.5 mr-1" />Convert to Invoice
@@ -78,7 +87,7 @@ export function QuoteDetail({ quote }: Props) {
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden print:shadow-none print:rounded-none">
 
         {/* Top colour bar */}
-        <div className="h-2 bg-gradient-to-r from-slate-700 via-blue-800 to-blue-500" />
+        <div className="h-2 bg-linear-to-r from-slate-700 via-blue-800 to-blue-500" />
 
         <div className="p-5 sm:p-8 print:p-10">
 
@@ -207,7 +216,7 @@ export function QuoteDetail({ quote }: Props) {
           </div>
 
           {/* Bottom colour bar */}
-          <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-800 to-slate-700 mt-6 -mx-5 sm:-mx-8 print:-mx-10" />
+          <div className="h-1 bg-linear-to-r from-blue-500 via-blue-800 to-slate-700 mt-6 -mx-5 sm:-mx-8 print:-mx-10" />
         </div>
       </div>
 

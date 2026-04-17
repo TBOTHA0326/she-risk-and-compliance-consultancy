@@ -436,6 +436,89 @@ export interface Database {
         Update: Record<string, never>
         Relationships: []
       }
+      trips: {
+        Row: {
+          id: string
+          title: string
+          company_id: string | null
+          departure_date: string
+          return_date: string
+          notes: string | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          company_id?: string | null
+          departure_date: string
+          return_date: string
+          notes?: string | null
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          title?: string
+          company_id?: string | null
+          departure_date?: string
+          return_date?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trips_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      trip_timeline_entries: {
+        Row: {
+          id: string
+          trip_id: string
+          entry_date: string
+          entry_time: string
+          title: string
+          location: string | null
+          notes: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          trip_id: string
+          entry_date: string
+          entry_time: string
+          title: string
+          location?: string | null
+          notes?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          trip_id?: string
+          entry_date?: string
+          entry_time?: string
+          title?: string
+          location?: string | null
+          notes?: string | null
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_timeline_entries_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       activity_log: {
         Row: {
           id: string
@@ -547,11 +630,16 @@ export type SHEDocument = Database['public']['Tables']['documents']['Row']
 export type SafetyFile = Database['public']['Tables']['safety_files']['Row']
 export type SafetyFileSection = Database['public']['Tables']['safety_file_sections']['Row']
 export type SafetyFileSectionDocument = Database['public']['Tables']['safety_file_section_documents']['Row']
+export type Trip = Database['public']['Tables']['trips']['Row']
+export type TripTimelineEntry = Database['public']['Tables']['trip_timeline_entries']['Row']
 export type ActivityLog = Database['public']['Tables']['activity_log']['Row']
 
 // With relations
 export type InvoiceWithCompany = Invoice & { companies: Pick<Company, 'id' | 'name'> }
 export type QuoteWithCompany = Quote & { companies: Pick<Company, 'id' | 'name'> }
+export type TripWithCompany = Trip & { companies: Pick<Company, 'id' | 'name'> | null }
+export type TripWithTimeline = Trip & { trip_timeline_entries: TripTimelineEntry[] }
+export type TripWithDetails = TripWithCompany & { trip_timeline_entries: TripTimelineEntry[] }
 export type InvoiceWithLineItems = Invoice & { invoice_line_items: InvoiceLineItem[] }
 export type QuoteWithLineItems = Quote & { quote_line_items: QuoteLineItem[] }
 export type SafetyFileWithSections = SafetyFile & { safety_file_sections: SafetyFileSection[] }

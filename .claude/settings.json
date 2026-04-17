@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"SHE safety health environment compliance risk management professional\" --design-system -p \"SHE Risk & Compliance\" -f markdown)",
+      "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"SHE safety health environment compliance risk management professional\" --design-system -p \"SHE Risk & Compliance\" -f markdown)",
+      "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"compliance risk management professional\" --domain color)",
+      "Read(//c/Users/Tiaan Botha/.claude/plugins/cache/ui-ux-pro-max-skill/**)",
+      "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\cli\\\\assets\\\\scripts\\\\search.py\" \"compliance risk management professional\" --domain color)",
+      "Bash(npm run *)",
+      "Bash(python skills/ui-ux-pro-max/scripts/search.py \"compliance scheduling calendar week-view SaaS productivity tool\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(python3 skills/ui-ux-pro-max/scripts/search.py \"compliance scheduling calendar week-view SaaS productivity tool\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(python .claude/skills/ui-ux-pro-max/scripts/search.py \"compliance scheduling calendar week-view SaaS productivity tool\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(python cli/assets/scripts/search.py \"compliance scheduling calendar week-view SaaS productivity tool\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs kill *)",
+      "Bash(curl -s http://localhost:3000/login)",
+      "Read(//tmp/**)",
+      "Bash(curl -s http://localhost:3001/login)",
+      "Bash(netstat -tuln)",
+      "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"SHE compliance safety dashboard professional dark modern\" --design-system -p \"SHE Risk & Compliance\" -f markdown)",
+      "Read(//c/Users/Tiaan Botha/.claude/plugins/cache/ui-ux-pro-max-skill\" 2>/dev/**)"
+    ]
+  }
+}

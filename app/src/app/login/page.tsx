@@ -32,30 +32,26 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-blue-900 to-red-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-10">
       <div className="w-full max-w-md">
-        {/* Logo / Brand */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-red-600 via-blue-900 to-yellow-400 rounded-2xl mb-4 shadow-lg shadow-blue-900/40">
-            <HardHat className="w-7 h-7 text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-[#a3e635] shadow-xl shadow-black/30 mb-4">
+            <HardHat className="w-6 h-6 text-[#1a2e05]" />
           </div>
-          <h1 className="text-2xl font-bold text-white">SHE Risk &amp; Compliance</h1>
-          <p className="text-sm text-slate-400 mt-1">Sign in to your account</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-white">SHE Risk & Compliance</h1>
+          <p className="text-sm text-slate-400 mt-2">Secure access to compliance workflows, invoices, and safety files.</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8">
-          <form onSubmit={handleLogin} className="space-y-5">
-            {/* Error */}
+        <div className="bg-slate-950/95 border border-white/10 shadow-[0_30px_80px_rgba(15,23,42,0.25)] rounded-4xl p-8">
+          <form onSubmit={handleLogin} className="space-y-6">
             {error && (
-              <div className="bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm rounded-lg px-4 py-3">
+              <div className="rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-200 px-4 py-3 text-sm">
                 {error}
               </div>
             )}
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-200">
                 Email address
               </label>
               <input
@@ -65,13 +61,12 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+                className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:border-[#84cc16] focus:outline-none focus:ring-2 focus:ring-[#84cc16]/20 transition"
               />
             </div>
 
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <div className="space-y-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-200">
                 Password
               </label>
               <div className="relative">
@@ -82,29 +77,30 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3.5 py-2.5 pr-10 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+                  className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 pr-12 text-sm text-slate-100 placeholder-slate-500 focus:border-[#84cc16] focus:outline-none focus:ring-2 focus:ring-[#84cc16]/20 transition"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-red-700 hover:bg-red-800 disabled:bg-red-400 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition flex items-center justify-center gap-2"
+              className="w-full rounded-2xl bg-[#84cc16] px-4 py-3 text-sm font-semibold text-[#1a2e05] shadow-lg shadow-lime-500/20 transition hover:bg-[#65a30d] disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
+
+          <p className="mt-6 text-center text-sm text-slate-500">Need help? Contact your administrator for access.</p>
         </div>
       </div>
     </div>
