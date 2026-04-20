@@ -19,7 +19,16 @@
       "Bash(curl -s http://localhost:3001/login)",
       "Bash(netstat -tuln)",
       "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"SHE compliance safety dashboard professional dark modern\" --design-system -p \"SHE Risk & Compliance\" -f markdown)",
-      "Read(//c/Users/Tiaan Botha/.claude/plugins/cache/ui-ux-pro-max-skill\" 2>/dev/**)"
+      "Read(//c/Users/Tiaan Botha/.claude/plugins/cache/ui-ux-pro-max-skill\" 2>/dev/**)",
+      "Bash(python3 \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"compliance SaaS dashboard expense tracking professional\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(python \"C:\\\\Users\\\\Tiaan Botha\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.0.1\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"compliance SaaS dashboard expense tracking professional\" --design-system -p \"SHE Risk Compliance\")",
+      "Bash(npx tsc *)",
+      "WebSearch",
+      "WebFetch(domain:ammaspares.co.za)"
+    ],
+    "additionalDirectories": [
+      "c:\\Personal Projects\\Tiaan\\she-risk-and-compliance-consultancy\\app\\src\\app\\(dashboard)\\expenses",
+      "c:\\Personal Projects\\Tiaan\\she-risk-and-compliance-consultancy\\app\\src\\app\\(dashboard)\\expenses\\[id]"
     ]
   }
 }

@@ -16,6 +16,7 @@ import {
   HardHat,
   Menu,
   X,
+  Receipt,
 } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -23,9 +24,10 @@ import { cn } from '@/lib/utils'
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/companies', label: 'Companies', icon: Building2 },
-  { href: '/trips', label: 'Trips', icon: MapPin },
+  { href: '/trips', label: 'Trips/Calander', icon: MapPin },
   { href: '/invoices', label: 'Invoices', icon: FileText },
   { href: '/quotes', label: 'Quotes', icon: Quote },
+  { href: '/expenses', label: 'Expenses', icon: Receipt },
   { href: '/documents', label: 'Documents', icon: FolderOpen },
   { href: '/safety-files', label: 'Safety Files', icon: ShieldCheck },
 ]

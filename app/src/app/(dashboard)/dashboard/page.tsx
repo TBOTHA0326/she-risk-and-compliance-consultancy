@@ -10,9 +10,12 @@ import {
   AlertTriangle,
   TrendingUp,
   FolderOpen,
+  Receipt,
+  Clock,
 } from 'lucide-react'
 import { RevenueChart } from './RevenueChart'
 import { InvoiceStatusChart } from './InvoiceStatusChart'
+import { ExpensesChart } from './ExpensesChart'
 import Link from 'next/link'
 import { invoiceStatusBadge } from '@/components/ui/Badge'
 
@@ -25,6 +28,8 @@ export default async function DashboardPage() {
     { data: recentActivity },
     { data: monthlyRevenue },
     { data: invoiceStatuses },
+    { data: monthlyExpenses },
+    { data: recentExpenses },
   ] = await Promise.all([
     supabase.from('v_dashboard_kpis').select('*').single(),
     supabase
@@ -39,6 +44,12 @@ export default async function DashboardPage() {
       .limit(10),
     supabase.from('v_monthly_revenue').select('*').order('month', { ascending: false }).limit(12),
     supabase.from('invoices').select('status'),
+    supabase.from('v_monthly_expenses').select('*').order('month', { ascending: false }).limit(12),
+    supabase
+      .from('expenses')
+      .select('id, title, category, total, status, expense_date, companies(name)')
+      .order('expense_date', { ascending: false })
+      .limit(5),
   ])
 
   const statusCounts = (invoiceStatuses ?? []).reduce<Record<string, number>>((acc, inv) => {
@@ -124,6 +135,18 @@ export default async function DashboardPage() {
           icon={<TrendingUp className="w-4 h-4 text-[#84cc16]" />}
           highlight="success"
         />
+        <KpiCard
+          title="Expenses This Month"
+          value={formatCurrency(kpis?.expenses_this_month ?? 0)}
+          icon={<Receipt className="w-4 h-4 text-orange-500" />}
+          highlight={kpis?.expenses_this_month ? 'warning' : 'default'}
+        />
+        <KpiCard
+          title="Pending Expenses"
+          value={kpis?.pending_expenses ?? 0}
+          icon={<Clock className="w-4 h-4 text-amber-500" />}
+          highlight={kpis?.pending_expenses ? 'warning' : 'default'}
+        />
       </div>
 
       {/* Charts row */}
@@ -138,6 +161,43 @@ export default async function DashboardPage() {
           <Card className="p-5 h-full">
             <h2 className="text-sm font-semibold text-slate-700 mb-4">Invoice Status</h2>
             <InvoiceStatusChart data={statusCounts} />
+          </Card>
+        </div>
+      </div>
+
+      {/* Expenses chart */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <Card className="p-5">
+            <h2 className="text-sm font-semibold text-slate-700 mb-4">Monthly Expenses</h2>
+            <ExpensesChart data={(monthlyExpenses ?? []).slice().reverse()} />
+          </Card>
+        </div>
+        <div>
+          <Card className="p-5 h-full">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-slate-700">Recent Expenses</h2>
+              <Link href="/expenses" className="text-xs text-[#65a30d] hover:underline">View all</Link>
+            </div>
+            <div className="divide-y divide-slate-100/60">
+              {(recentExpenses ?? []).length === 0 ? (
+                <p className="py-8 text-sm text-slate-400 text-center">No expenses yet</p>
+              ) : (
+                (recentExpenses ?? []).map((exp) => (
+                  <Link
+                    key={exp.id}
+                    href={`/expenses/${exp.id}`}
+                    className="flex items-center justify-between py-2.5 hover:opacity-80 transition"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-slate-900 truncate">{exp.title}</p>
+                      <p className="text-xs text-slate-400 capitalize">{exp.category.replace(/_/g, ' ')}</p>
+                    </div>
+                    <p className="text-xs font-medium text-slate-700 ml-3 shrink-0">{formatCurrency(exp.total)}</p>
+                  </Link>
+                ))
+              )}
+            </div>
           </Card>
         </div>
       </div>

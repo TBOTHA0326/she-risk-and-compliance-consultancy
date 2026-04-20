@@ -13,6 +13,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ id: st
     { data: documents },
     { data: safetyFiles },
     { data: activity },
+    { data: expenses },
   ] = await Promise.all([
     supabase.from('companies').select('*').eq('id', id).single(),
     supabase.from('invoices').select('*').eq('company_id', id).order('created_at', { ascending: false }),
@@ -20,6 +21,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ id: st
     supabase.from('documents').select('*').eq('company_id', id).order('created_at', { ascending: false }),
     supabase.from('v_safety_file_progress').select('*').eq('company_id', id),
     supabase.from('activity_log').select('*').eq('entity_id', id).order('created_at', { ascending: false }).limit(20),
+    supabase.from('expenses').select('*').eq('company_id', id).order('expense_date', { ascending: false }),
   ])
 
   if (!company) notFound()
@@ -32,6 +34,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ id: st
       documents={documents ?? []}
       safetyFiles={safetyFiles ?? []}
       activity={activity ?? []}
+      expenses={expenses ?? []}
     />
   )
 }

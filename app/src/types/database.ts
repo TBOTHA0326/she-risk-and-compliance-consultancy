@@ -1,6 +1,18 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type CompanyStatus = 'active' | 'inactive'
+export type ExpenseCategory =
+  | 'fuel'
+  | 'accommodation'
+  | 'meals'
+  | 'equipment'
+  | 'training'
+  | 'office_supplies'
+  | 'travel'
+  | 'professional_services'
+  | 'maintenance'
+  | 'other'
+export type ExpenseStatus = 'pending' | 'approved' | 'rejected' | 'reimbursed'
 export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled'
 export type QuoteStatus = 'draft' | 'sent' | 'accepted' | 'rejected' | 'expired'
 export type DocumentCategory =
@@ -519,6 +531,74 @@ export interface Database {
           }
         ]
       }
+      expenses: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          category: ExpenseCategory
+          amount: number
+          vat_enabled: boolean
+          vat_rate: number
+          vat_amount: number
+          total: number
+          expense_date: string
+          company_id: string | null
+          status: ExpenseStatus
+          receipt_path: string | null
+          receipt_filename: string | null
+          notes: string | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          category?: ExpenseCategory
+          amount?: number
+          vat_enabled?: boolean
+          vat_rate?: number
+          vat_amount?: number
+          total?: number
+          expense_date?: string
+          company_id?: string | null
+          status?: ExpenseStatus
+          receipt_path?: string | null
+          receipt_filename?: string | null
+          notes?: string | null
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          title?: string
+          description?: string | null
+          category?: ExpenseCategory
+          amount?: number
+          vat_enabled?: boolean
+          vat_rate?: number
+          vat_amount?: number
+          total?: number
+          expense_date?: string
+          company_id?: string | null
+          status?: ExpenseStatus
+          receipt_path?: string | null
+          receipt_filename?: string | null
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       activity_log: {
         Row: {
           id: string
@@ -571,6 +651,16 @@ export interface Database {
           active_quotes: number
           safety_files_in_progress: number
           expiring_documents_30d: number
+          expenses_this_month: number
+          pending_expenses: number
+        }
+        Relationships: []
+      }
+      v_monthly_expenses: {
+        Row: {
+          month: string
+          total_amount: number
+          expense_count: number
         }
         Relationships: []
       }
@@ -614,6 +704,8 @@ export interface Database {
       safety_file_status: SafetyFileStatus
       safety_section_status: SafetySectionStatus
       user_role: UserRole
+      expense_category: ExpenseCategory
+      expense_status: ExpenseStatus
     }
     CompositeTypes: Record<string, never>
   }
@@ -633,6 +725,8 @@ export type SafetyFileSectionDocument = Database['public']['Tables']['safety_fil
 export type Trip = Database['public']['Tables']['trips']['Row']
 export type TripTimelineEntry = Database['public']['Tables']['trip_timeline_entries']['Row']
 export type ActivityLog = Database['public']['Tables']['activity_log']['Row']
+export type Expense = Database['public']['Tables']['expenses']['Row']
+export type ExpenseWithCompany = Expense & { companies: Pick<Company, 'id' | 'name'> | null }
 
 // With relations
 export type InvoiceWithCompany = Invoice & { companies: Pick<Company, 'id' | 'name'> }

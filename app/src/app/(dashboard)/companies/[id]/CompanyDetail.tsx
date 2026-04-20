@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/Button'
 import { Card, PageHeader, EmptyState } from '@/components/ui/Card'
 import { Badge, invoiceStatusBadge, quoteStatusBadge, safetyFileStatusBadge, companyStatusBadge } from '@/components/ui/Badge'
 import { formatCurrency, formatDate, formatDateTime, isExpiringSoon, isExpired } from '@/lib/utils'
-import type { Company, Invoice, Quote, SHEDocument, ActivityLog } from '@/types/database'
-import { Building2, Edit, FileText, FolderOpen, ShieldCheck } from 'lucide-react'
+import type { Company, Invoice, Quote, SHEDocument, ActivityLog, Expense, ExpenseCategory, ExpenseStatus } from '@/types/database'
+import { Building2, Edit, FileText, FolderOpen, ShieldCheck, Receipt } from 'lucide-react'
 
 interface SafetyFileSummary {
   safety_file_id: string
@@ -18,6 +18,21 @@ interface SafetyFileSummary {
   due_date: string | null
 }
 
+function expenseStatusBadge(status: ExpenseStatus) {
+  const map: Record<ExpenseStatus, { label: string; variant: 'neutral' | 'warning' | 'danger' | 'success' | 'info' }> = {
+    pending: { label: 'Pending', variant: 'warning' },
+    approved: { label: 'Approved', variant: 'success' },
+    rejected: { label: 'Rejected', variant: 'danger' },
+    reimbursed: { label: 'Reimbursed', variant: 'info' },
+  }
+  const { label, variant } = map[status] ?? { label: status, variant: 'neutral' }
+  return <Badge variant={variant}>{label}</Badge>
+}
+
+function formatExpenseCategory(cat: ExpenseCategory) {
+  return cat.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 interface Props {
   company: Company
   invoices: Invoice[]
@@ -25,9 +40,10 @@ interface Props {
   documents: SHEDocument[]
   safetyFiles: SafetyFileSummary[]
   activity: ActivityLog[]
+  expenses: Expense[]
 }
 
-type Tab = 'overview' | 'invoices' | 'quotes' | 'documents' | 'safety_files' | 'activity'
+type Tab = 'overview' | 'invoices' | 'quotes' | 'documents' | 'safety_files' | 'expenses' | 'activity'
 
 const tabs: { id: Tab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
@@ -35,10 +51,11 @@ const tabs: { id: Tab; label: string }[] = [
   { id: 'quotes', label: 'Quotes' },
   { id: 'documents', label: 'Documents' },
   { id: 'safety_files', label: 'Safety Files' },
+  { id: 'expenses', label: 'Expenses' },
   { id: 'activity', label: 'Activity' },
 ]
 
-export function CompanyDetail({ company, invoices, quotes, documents, safetyFiles, activity }: Props) {
+export function CompanyDetail({ company, invoices, quotes, documents, safetyFiles, activity, expenses }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('overview')
 
   const outstandingBalance = invoices
@@ -141,6 +158,14 @@ export function CompanyDetail({ company, invoices, quotes, documents, safetyFile
                 <div className="flex justify-between">
                   <span className="text-gray-500">Documents</span>
                   <span className="font-medium">{documents.length}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Expenses</span>
+                  <span className="font-medium">{expenses.length}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Total Expenses</span>
+                  <span className="font-medium text-rose-700">{formatCurrency(expenses.reduce((s, e) => s + e.total, 0))}</span>
                 </div>
               </div>
             </Card>
@@ -255,6 +280,34 @@ export function CompanyDetail({ company, invoices, quotes, documents, safetyFile
                   <div className="text-right">
                     {safetyFileStatusBadge(sf.status)}
                     <p className="text-xs text-gray-400 mt-1">{sf.completion_percentage}% complete</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </Card>
+      )}
+
+      {/* Expenses Tab */}
+      {activeTab === 'expenses' && (
+        <Card>
+          <div className="px-5 py-4 border-b border-gray-100 flex justify-between items-center">
+            <h2 className="text-sm font-semibold text-gray-700">Expenses</h2>
+            <Link href={`/expenses/new?company=${company.id}`}><Button size="sm">+ Expense</Button></Link>
+          </div>
+          {!expenses.length ? (
+            <EmptyState message="No expenses" icon={<Receipt className="w-8 h-8" />} />
+          ) : (
+            <div className="divide-y divide-gray-50">
+              {expenses.map((exp) => (
+                <Link key={exp.id} href={`/expenses/${exp.id}`} className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{exp.title}</p>
+                    <p className="text-xs text-gray-400">{formatExpenseCategory(exp.category)} · {formatDate(exp.expense_date)}</p>
+                  </div>
+                  <div className="text-right">
+                    {expenseStatusBadge(exp.status)}
+                    <p className="text-xs text-gray-500 mt-1">{formatCurrency(exp.total)}</p>
                   </div>
                 </Link>
               ))}
